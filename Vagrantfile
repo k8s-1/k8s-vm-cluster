@@ -41,23 +41,23 @@ Vagrant.configure("2") do |config|
           vb.customize ["modifyvm", :id, "--groups", ("/" + settings["cluster_name"])]
         end
     end
-    controlplane.vm.provision "shell",
-      env: {
-        "DNS_SERVERS" => settings["network"]["dns_servers"].join(" "),
-        "ENVIRONMENT" => settings["environment"],
-        "KUBERNETES_VERSION" => settings["software"]["kubernetes"],
-        "KUBERNETES_VERSION_SHORT" => settings["software"]["kubernetes"][0..3],
-        "OS" => settings["software"]["os"]
-      },
-      path: "scripts/common.sh"
-    controlplane.vm.provision "shell",
-      env: {
-        "CALICO_VERSION" => settings["software"]["calico"],
-        "CONTROL_IP" => settings["network"]["control_ip"],
-        "POD_CIDR" => settings["network"]["pod_cidr"],
-        "SERVICE_CIDR" => settings["network"]["service_cidr"]
-      },
-      path: "scripts/master.sh"
+    # controlplane.vm.provision "shell",
+    #   env: {
+    #     "DNS_SERVERS" => settings["network"]["dns_servers"].join(" "),
+    #     "ENVIRONMENT" => settings["environment"],
+    #     "KUBERNETES_VERSION" => settings["software"]["kubernetes"],
+    #     "KUBERNETES_VERSION_SHORT" => settings["software"]["kubernetes"][0..3],
+    #     "OS" => settings["software"]["os"]
+    #   },
+    #   path: "scripts/common.sh"
+    # controlplane.vm.provision "shell",
+    #   env: {
+    #     "CALICO_VERSION" => settings["software"]["calico"],
+    #     "CONTROL_IP" => settings["network"]["control_ip"],
+    #     "POD_CIDR" => settings["network"]["pod_cidr"],
+    #     "SERVICE_CIDR" => settings["network"]["service_cidr"]
+    #   },
+    #   path: "scripts/master.sh"
   end
 
   (1..NUM_WORKER_NODES).each do |i|
@@ -65,11 +65,11 @@ Vagrant.configure("2") do |config|
     config.vm.define "node0#{i}" do |node|
       node.vm.hostname = "node0#{i}"
       node.vm.network "private_network", ip: IP_NW + "#{IP_START + i}"
-      if settings["shared_folders"]
-        settings["shared_folders"].each do |shared_folder|
-          node.vm.synced_folder shared_folder["host_path"], shared_folder["vm_path"]
-        end
-      end
+      # if settings["shared_folders"]
+      #   settings["shared_folders"].each do |shared_folder|
+      #     node.vm.synced_folder shared_folder["host_path"], shared_folder["vm_path"]
+      #   end
+      # end
       node.vm.provider "virtualbox" do |vb|
           vb.cpus = settings["nodes"]["workers"]["cpu"]
           vb.memory = settings["nodes"]["workers"]["memory"]
@@ -77,21 +77,21 @@ Vagrant.configure("2") do |config|
             vb.customize ["modifyvm", :id, "--groups", ("/" + settings["cluster_name"])]
           end
       end
-      node.vm.provision "shell",
-        env: {
-          "DNS_SERVERS" => settings["network"]["dns_servers"].join(" "),
-          "ENVIRONMENT" => settings["environment"],
-          "KUBERNETES_VERSION" => settings["software"]["kubernetes"],
-          "KUBERNETES_VERSION_SHORT" => settings["software"]["kubernetes"][0..3],
-          "OS" => settings["software"]["os"]
-        },
-        path: "scripts/common.sh"
-      node.vm.provision "shell", path: "scripts/node.sh"
+      # node.vm.provision "shell",
+      #   env: {
+      #     "DNS_SERVERS" => settings["network"]["dns_servers"].join(" "),
+      #     "ENVIRONMENT" => settings["environment"],
+      #     "KUBERNETES_VERSION" => settings["software"]["kubernetes"],
+      #     "KUBERNETES_VERSION_SHORT" => settings["software"]["kubernetes"][0..3],
+      #     "OS" => settings["software"]["os"]
+      #   },
+      #   path: "scripts/common.sh"
+      # node.vm.provision "shell", path: "scripts/node.sh"
 
       # Only install the dashboard after provisioning the last worker (and when enabled).
-      if i == NUM_WORKER_NODES and settings["software"]["dashboard"] and settings["software"]["dashboard"] != ""
-        node.vm.provision "shell", path: "scripts/dashboard.sh"
-      end
+      # if i == NUM_WORKER_NODES and settings["software"]["dashboard"] and settings["software"]["dashboard"] != ""
+      #   node.vm.provision "shell", path: "scripts/dashboard.sh"
+      # end
     end
 
   end

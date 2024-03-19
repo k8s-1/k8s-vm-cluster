@@ -7,18 +7,18 @@ set -euxo pipefail
 # Variable Declaration
 
 # DNS Setting
-# if [ ! -d /etc/systemd/resolved.conf.d ]; then
-# 	sudo mkdir /etc/systemd/resolved.conf.d/
-# fi
-# cat <<EOF | sudo tee /etc/systemd/resolved.conf.d/dns_servers.conf
-# [Resolve]
-#
-# EOF
+if [ ! -d /etc/systemd/resolved.conf.d ]; then
+	sudo mkdir /etc/systemd/resolved.conf.d/
+fi
+cat <<EOF | sudo tee /etc/systemd/resolved.conf.d/dns_servers.conf
+[Resolve]
 
-# sudo systemctl restart systemd-resolved
+EOF
+
+sudo systemctl restart systemd-resolved
 
 # disable swap
-# sudo swapoff -a
+sudo swapoff -a
 
 # keeps the swaf off during reboot
 (
@@ -28,23 +28,23 @@ set -euxo pipefail
 sudo apt-get update -y
 
 # Create the .conf file to load the modules at bootup
-# cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
-# overlay
-# br_netfilter
-# EOF
+cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
+overlay
+br_netfilter
+EOF
 #
-# sudo modprobe overlay
-# sudo modprobe br_netfilter
+sudo modprobe overlay
+sudo modprobe br_netfilter
 #
 # # sysctl params required by setup, params persist across reboots
-# cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
-# net.bridge.bridge-nf-call-iptables  = 1
-# net.bridge.bridge-nf-call-ip6tables = 1
-# net.ipv4.ip_forward                 = 1
-# EOF
+cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-iptables  = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+net.ipv4.ip_forward                 = 1
+EOF
 #
 # # Apply sysctl params without reboot
-# sudo sysctl --system
+sudo sysctl --system
 
 ## Install CRIO Runtime
 

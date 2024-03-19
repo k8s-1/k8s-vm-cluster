@@ -79,4 +79,3 @@ sudo mkdir -p /etc/apt/keyrings
 # cat >/etc/default/kubelet <<EOF
 # KUBELET_EXTRA_ARGS=--node-ip=$local_ip
 # ${ENVIRONMENT}
-EOF

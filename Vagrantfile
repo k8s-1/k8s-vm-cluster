@@ -65,11 +65,6 @@ Vagrant.configure("2") do |config|
     config.vm.define "node0#{i}" do |node|
       node.vm.hostname = "node0#{i}"
       node.vm.network "private_network", ip: IP_NW + "#{IP_START + i}"
-      # if settings["shared_folders"]
-      #   settings["shared_folders"].each do |shared_folder|
-      #     node.vm.synced_folder shared_folder["host_path"], shared_folder["vm_path"]
-      #   end
-      # end
       node.vm.provider "virtualbox" do |vb|
           vb.cpus = settings["nodes"]["workers"]["cpu"]
           vb.memory = settings["nodes"]["workers"]["memory"]
@@ -86,12 +81,6 @@ Vagrant.configure("2") do |config|
           "OS" => settings["software"]["os"]
         },
         path: "scripts/common.sh"
-      # node.vm.provision "shell", path: "scripts/node.sh"
-
-      # Only install the dashboard after provisioning the last worker (and when enabled).
-      # if i == NUM_WORKER_NODES and settings["software"]["dashboard"] and settings["software"]["dashboard"] != ""
-      #   node.vm.provision "shell", path: "scripts/dashboard.sh"
-      # end
     end
 
   end

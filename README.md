@@ -3,6 +3,10 @@
 ## Get started
 ```
 vagrant up
+
 vagrant ssh cp
+
 # install and bootstrap kubernetes with e.g. kubeadm
+
+vagrant destroy -f
 ```

@@ -50,14 +50,6 @@ Vagrant.configure("2") do |config|
         "OS" => settings["software"]["os"]
       },
       path: "scripts/common.sh"
-    # controlplane.vm.provision "shell",
-    #   env: {
-    #     "CALICO_VERSION" => settings["software"]["calico"],
-    #     "CONTROL_IP" => settings["network"]["control_ip"],
-    #     "POD_CIDR" => settings["network"]["pod_cidr"],
-    #     "SERVICE_CIDR" => settings["network"]["service_cidr"]
-    #   },
-    #   path: "scripts/master.sh"
   end
 
   (1..NUM_WORKER_NODES).each do |i|

@@ -10,3 +10,7 @@ vagrant ssh cp
 
 vagrant destroy -f
 ```
+
+## Post-bootstrap DIY
+* Install kubernetes
+* Install a CNI e.g. calico / weave

@@ -13,4 +13,4 @@ vagrant destroy -f
 
 ## Post-bootstrap DIY
 * Install kubernetes
-* Install a CNI e.g. calico / weave
+* Install a CNI e.g. calico / flannel /weave

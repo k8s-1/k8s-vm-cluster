@@ -4,6 +4,7 @@
 * CRI installed
 * base-packages installed
 * iptables configured
+* swap is off
 
 ## Get started
 ```

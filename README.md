@@ -2,6 +2,8 @@
 
 * Kernel bridge-networking configured
 * CRI installed
+* base-packages installed
+* iptables configured
 
 ## Get started
 ```

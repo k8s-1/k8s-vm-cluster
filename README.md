@@ -1,5 +1,8 @@
 # Kubernetes-ready Vagrant VM cluster
 
+* Kernel bridge-networking configured
+* CRI installed
+
 ## Get started
 ```
 vagrant up

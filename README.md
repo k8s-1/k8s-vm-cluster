@@ -1,7 +1,7 @@
 # Kubernetes-ready Vagrant VM cluster
 
 * Kernel bridge-networking configured
-* CRI installed
+* CRI installed (cri-o)
 * base-packages installed
 * iptables configured
 * swap is off
